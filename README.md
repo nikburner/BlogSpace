@@ -1,199 +1,227 @@
-# BlogSpace
+# 📝 BlogSpace
 
-A full-stack blogging platform built with modern web technologies, featuring user authentication, rich text editing, image uploads, and AI-powered content assistance.
+A full-stack blogging platform where users can sign up, create, edit, and delete blogs — with AI-powered content generation using Google Gemini.
 
-## Overview
+---
 
-BlogSpace is a comprehensive blogging application that allows users to create, manage, and share blog posts with a rich editing experience. The platform includes user authentication, admin controls, and integrates with AI services for enhanced content creation.
+## 🚀 Features
 
-## Features
+- 🔐 Admin signup & login with JWT authentication
+- ✍️ Create, edit, and delete blog posts
+- 🤖 AI content generation powered by Google Gemini
+- 🖼️ Image upload via ImageKit CDN
+- 🔍 Search blogs by keyword
+- 🏷️ Filter blogs by category
+- 📱 Fully responsive UI built with React + Tailwind CSS
+- 🎨 Clean teal-themed design
 
-### User Features
-- **User Registration & Authentication**: Secure signup and login with JWT tokens
-- **Blog Creation**: Rich text editor with Quill for creating engaging content
-- **Image Uploads**: Integrated ImageKit for seamless image management
-- **Personal Dashboard**: Manage your own blog posts
-- **Responsive Design**: Works perfectly on desktop and mobile devices
+---
 
-### Admin Features
-- **Content Moderation**: Admin panel for managing all blog posts
-- **User Management**: Administrative controls over user accounts
-- **Analytics**: Basic analytics and content oversight
+## 📸 Screenshots
 
-### Technical Features
-- **AI Integration**: Google Gemini AI for content assistance
-- **Real-time Notifications**: Toast notifications for user feedback
-- **Secure API**: RESTful API with proper authentication and authorization
-- **File Upload Handling**: Multer middleware for file processing
+### Home Page
+![Home Page](ss/home.png)
 
-## Tech Stack
+### Login Page
+![Login Page](ss/login.png)
+
+### Signup Page
+![Signup Page](ss/signup.png)
+
+### My Blogs
+![My Blogs](ss/myblog.png)
+
+### Create Blog
+![Create Blog](ss/createblog.png)
+
+### Blog Detail
+![Blog Detail](ss/blogdetail.png)
+
+
+## 🛠️ Tech Stack
 
 ### Frontend
-- **React 19**: Modern React with hooks and concurrent features
-- **Vite**: Fast build tool and development server
-- **React Router**: Client-side routing
-- **Bootstrap 5**: Responsive CSS framework
-- **Quill Editor**: Rich text editing capabilities
-- **Axios**: HTTP client for API requests
-- **React Hot Toast**: Notification system
+| Tech | Purpose |
+|------|---------|
+| React 19 | UI framework |
+| Vite | Build tool |
+| Tailwind CSS | Styling |
+| React Router DOM | Client-side routing |
+| Axios | HTTP requests |
+| React Hot Toast | Notifications |
+| Quill.js | Rich text editor |
+| Marked.js | Markdown parser |
+| Moment.js | Date formatting |
 
 ### Backend
-- **Node.js**: JavaScript runtime
-- **Express.js**: Web application framework
-- **MongoDB**: NoSQL database with Mongoose ODM
-- **JWT**: JSON Web Tokens for authentication
-- **bcryptjs**: Password hashing
-- **Multer**: File upload handling
-- **ImageKit**: Image management and optimization
-- **Google Gemini AI**: AI-powered content features
+| Tech | Purpose |
+|------|---------|
+| Node.js + Express | Server |
+| MongoDB + Mongoose | Database |
+| JWT | Authentication |
+| bcryptjs | Password hashing |
+| Multer | File upload handling |
+| ImageKit | Image CDN storage |
+| Google Gemini API | AI content generation |
+| Cookie Parser | Cookie management |
+| CORS | Cross-origin requests |
 
-## Prerequisites
+---
 
-- Node.js (version 16 or higher)
-- MongoDB (local installation or cloud service like MongoDB Atlas)
-- npm or yarn package manager
-- ImageKit account (for image uploads)
-- Google AI API key (for Gemini integration)
-
-## Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd BlogSpace-main
-   ```
-
-2. **Environment Setup:**
-   Create `.env` file in the `server` directory with the following variables:
-   ```env
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret_key
-   PORT=3000
-   IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
-   IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
-   IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
-   GEMINI_API_KEY=your_google_gemini_api_key
-   ```
-
-3. **Install Backend Dependencies:**
-   ```bash
-   cd server
-   npm install
-   ```
-
-4. **Install Frontend Dependencies:**
-   ```bash
-   cd ../client
-   npm install
-   ```
-
-## Usage
-
-### Development
-
-1. **Start the Backend Server:**
-   ```bash
-   cd server
-   npm start
-   ```
-   The server will run on `http://localhost:3000`
-
-2. **Start the Frontend Development Server:**
-   ```bash
-   cd client
-   npm run dev
-   ```
-   The client will be available at `http://localhost:5173`
-
-### Production
-
-1. **Build the Frontend:**
-   ```bash
-   cd client
-   npm run build
-   ```
-
-2. **Start the Backend:**
-   ```bash
-   cd server
-   npm start
-   ```
-
-The production build will be served from the backend, with CORS configured for the frontend.
-
-## Project Structure
+## 📁 Project Structure
 
 ```
-BlogSpace-main/
-├── client/                 # React frontend application
-│   ├── public/            # Static assets
+niteshsingh-26-blogspace/
+├── client/                     # React frontend
+│   ├── public/
 │   ├── src/
-│   │   ├── components/    # Reusable UI components
-│   │   ├── context/       # React context for state management
-│   │   ├── pages/         # Page components
-│   │   ├── assets/        # Application assets
-│   │   ├── App.jsx        # Main app component
-│   │   └── main.jsx       # Application entry point
-│   ├── package.json
-│   ├── vite.config.js
-│   └── README.md
-├── server/                 # Node.js backend application
-│   ├── config/            # Configuration files
-│   │   ├── db.js          # Database connection
-│   │   ├── gemini.js      # AI integration config
-│   │   └── imageKit.js    # Image service config
-│   ├── controllers/       # Route controllers
-│   │   ├── adminController.js
-│   │   └── blogController.js
-│   ├── middleware/        # Custom middleware
-│   │   ├── authMiddleware.js
-│   │   └── multerMiddleware.js
-│   ├── models/            # Mongoose models
-│   │   ├── blog.js
-│   │   └── user.js
-│   ├── routes/            # API routes
-│   │   ├── adminRoutes.js
-│   │   └── blogRoutes.js
-│   ├── index.js           # Server entry point
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── BlogCard.jsx
+│   │   │   ├── AdminBlogCard.jsx
+│   │   │   └── Loader.jsx
+│   │   ├── context/
+│   │   │   ├── AppContext.jsx
+│   │   │   └── UseAppContext.jsx
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Blog.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── SignUp.jsx
+│   │   │   ├── AddBlog.jsx
+│   │   │   ├── EditBlog.jsx
+│   │   │   └── MyBlog.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── index.html
 │   └── package.json
-└── README.md              # This file
+│
+└── server/                     # Express backend
+    ├── config/
+    │   ├── db.js
+    │   ├── gemini.js
+    │   └── imageKit.js
+    ├── controllers/
+    │   ├── adminController.js
+    │   └── blogController.js
+    ├── middleware/
+    │   ├── authMiddleware.js
+    │   └── multerMiddleware.js
+    ├── models/
+    │   ├── blog.js
+    │   └── user.js
+    ├── routes/
+    │   ├── adminRoutes.js
+    │   └── blogRoutes.js
+    ├── index.js
+    └── package.json
 ```
 
-## API Documentation
+---
 
-### Authentication Endpoints
-- `POST /api/admin/login` - User login
-- `POST /api/admin/signup` - User registration
+## ⚙️ Setup & Installation
 
-### Blog Endpoints
-- `GET /api/blog/all-blogs` - Get all blogs
-- `POST /api/blog/create-blog` - Create new blog (authenticated)
-- `GET /api/blog/single-blog/:id` - Get single blog
-- `PUT /api/blog/update-blog/:id` - Update blog (authenticated)
-- `DELETE /api/blog/delete-blog/:id` - Delete blog (authenticated)
-- `GET /api/blog/user-blog/:id` - Get user's blogs
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas account
+- ImageKit account
+- Google Gemini API key
 
-### Admin Endpoints
-- `GET /api/admin/all-users` - Get all users (admin only)
-- `DELETE /api/admin/delete-user/:id` - Delete user (admin only)
+---
 
-## Contributing
+### 1. Clone the repository
+```bash
+git clone https://github.com/YOUR_USERNAME/blogspace.git
+cd blogspace
+```
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Make your changes and commit: `git commit -m 'Add your feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Submit a pull request
+---
 
-## Environment Variables
+### 2. Setup the Server
 
-Make sure to set up the following environment variables in your `.env` file:
+```bash
+cd server
+npm install
+```
 
-- `MONGODB_URI`: MongoDB connection string
-- `JWT_SECRET`: Secret key for JWT token generation
-- `PORT`: Server port (default: 3000)
-- `IMAGEKIT_PUBLIC_KEY`: ImageKit public API key
-- `IMAGEKIT_PRIVATE_KEY`: ImageKit private API key
-- `IMAGEKIT_URL_ENDPOINT`: ImageKit URL endpoint
-- `GEMINI_API_KEY`: Google Gemini AI API key
+Create a `.env` file in the `server/` folder:
+```env
+PORT=3000
+SECRET_KEY=your_jwt_secret
+MONGODB_URI=your_mongodb_connection_string
+GEMINI_API_KEY=your_gemini_api_key
+IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
+CLIENT_URL=http://localhost:5173
+```
 
+Start the server:
+```bash
+npm run dev
+# or
+node index.js
+```
+
+Server runs on **http://localhost:3000**
+
+---
+
+### 3. Setup the Client
+
+```bash
+cd client
+npm install
+```
+
+Create a `.env` file in the `client/` folder:
+```env
+VITE_BASE_URL=http://localhost:3000
+```
+
+Start the client:
+```bash
+npm run dev
+```
+
+Client runs on **http://localhost:5173**
+
+---
+
+## 🔗 API Endpoints
+
+### Blog Routes (`/api/blog`)
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/signup` | Register new user | ❌ |
+| POST | `/login` | Login user | ❌ |
+| GET | `/profile` | Get logged-in user profile | ✅ |
+| POST | `/logout` | Logout user | ❌ |
+| GET | `/all` | Get all blogs | ❌ |
+| GET | `/:blogId` | Get single blog | ❌ |
+| GET | `/` | Get blogs with search/filter | ❌ |
+
+### Admin Routes (`/api/admin`)
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/add` | Create new blog | ✅ |
+| PUT | `/updateBlog/:id` | Update blog | ✅ |
+| DELETE | `/deleteBlog/:id` | Delete blog | ✅ |
+| POST | `/generateContent` | Generate AI content | ✅ |
+
+---
+
+
+
+
+---
+
+
+
+
+## 👤 Author
+
+**Nikhil** 
+> Built with ❤️ and a lot of teal 🟢
