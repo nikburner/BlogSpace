@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import adminRouter from "./routes/adminRoutes.js";
 import blogRouter from "./routes/blogRoutes.js";
+import chatRouter from "./routes/chatRoutes.js";
 
 // Initialize express app
 const app = express();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 //routes
 app.use("/api/blog", blogRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/chat", chatRouter);
 
 //port
 const port = process.env.PORT || 3000;

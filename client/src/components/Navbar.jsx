@@ -45,13 +45,7 @@ const Navbar = () => {
                 overflow: 'hidden',
             }}
         >
-            {/* Dot grid pattern
-            <div style={{
-                position: 'absolute', inset: 0,
-                backgroundImage: 'radial-gradient(circle, rgba(13,148,136,0.25) 1.2px, transparent 1.2px)',
-                backgroundSize: '22px 22px',
-                pointerEvents: 'none',
-            }} /> */}
+            
             {/* Diagonal lines */}
             <div style={{
                 position: 'absolute', inset: 0,

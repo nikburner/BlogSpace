@@ -1,6 +1,6 @@
 # 📝 BlogSpace
 
-A full-stack blogging platform where users can sign up, create, edit, and delete blogs — with AI-powered content generation using Google Gemini.
+An AI-Powered full-stack blogging platform where users can sign up, create, edit, and delete blogs — with AI content generation and a RAG-based chatbot powered by Google Gemini, LangChain and local embeddings.
 
 ---
 
@@ -8,12 +8,14 @@ A full-stack blogging platform where users can sign up, create, edit, and delete
 
 - 🔐 Admin signup & login with JWT authentication
 - ✍️ Create, edit, and delete blog posts
-- 🤖 AI content generation powered by Google Gemini
+- 🤖 AI content generation powered by Google Gemini + Google Search grounding
+- 🧠 RAG-based AI chatbot for context-aware Q&A on each blog
 - 🖼️ Image upload via ImageKit CDN
 - 🔍 Search blogs by keyword
 - 🏷️ Filter blogs by category
 - 📱 Fully responsive UI built with React + Tailwind CSS
 - 🎨 Clean teal-themed design
+- ⚡ Local embeddings (zero API calls) + MongoDB caching for instant responses
 
 ---
 
@@ -31,12 +33,16 @@ A full-stack blogging platform where users can sign up, create, edit, and delete
 ### My Blogs
 ![My Blogs](ss/myblog.png)
 
+### ChatBot
+![ChatBot](ss/chatbot.png)
+
 ### Create Blog
 ![Create Blog](ss/createblog.png)
 
 ### Blog Detail
 ![Blog Detail](ss/blogdetail.png)
 
+---
 
 ## 🛠️ Tech Stack
 
@@ -62,25 +68,62 @@ A full-stack blogging platform where users can sign up, create, edit, and delete
 | bcryptjs | Password hashing |
 | Multer | File upload handling |
 | ImageKit | Image CDN storage |
-| Google Gemini API | AI content generation |
+| Google Gemini API | AI content generation + chatbot LLM |
+| LangChain.js | Text chunking (RAG pipeline) |
+| Xenova Transformers | Local embeddings (zero API calls) |
 | Cookie Parser | Cookie management |
 | CORS | Cross-origin requests |
+
+---
+
+## 🧠 RAG Chatbot Architecture
+
+Each blog has a context-aware AI chatbot powered by a full RAG pipeline:
+
+```
+User Question
+↓
+Xenova Local Model (question → vector, instant, no API!)
+↓
+Cosine Similarity Search on cached blog chunks
+↓
+Top 3 Relevant Chunks Retrieved
+↓
+Google Gemini (context + question + history)
+↓
+Answer strictly based on blog content
+```
+
+**Pipeline steps:**
+1. Blog content fetched from MongoDB
+2. LangChain splits blog into 1000-char chunks with 100-char overlap
+3. Xenova `all-MiniLM-L6-v2` runs locally on server — converts chunks to embeddings
+4. Embeddings cached in MongoDB — generated only once per blog forever
+5. User question embedded locally (instant, zero network call)
+6. Cosine similarity finds top 3 most relevant chunks
+7. Top 3 chunks + question + chat history passed to Gemini
+8. Gemini answers strictly based on retrieved blog content
+
+**Why local embeddings:**
+- Zero API calls for embeddings = instant response
+- No rate limits, no cost, works offline
+- Same model quality as HuggingFace API
 
 ---
 
 ## 📁 Project Structure
 
 ```
-niteshsingh-26-blogspace/
-├── client/                     # React frontend
-│   ├── public/
+nikburner-blogspace/
+├── client/                     
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Navbar.jsx
 │   │   │   ├── Footer.jsx
 │   │   │   ├── BlogCard.jsx
 │   │   │   ├── AdminBlogCard.jsx
-│   │   │   └── Loader.jsx
+│   │   │   ├── Loader.jsx
+│   │   │   └── ChatBot.jsx         # RAG chatbot widget
 │   │   ├── context/
 │   │   │   ├── AppContext.jsx
 │   │   │   └── UseAppContext.jsx
@@ -98,23 +141,25 @@ niteshsingh-26-blogspace/
 │   ├── index.html
 │   └── package.json
 │
-└── server/                     # Express backend
+└── server/                     
     ├── config/
     │   ├── db.js
     │   ├── gemini.js
     │   └── imageKit.js
     ├── controllers/
     │   ├── adminController.js
-    │   └── blogController.js
+    │   ├── blogController.js
+    │   └── chatController.js       # RAG chatbot logic
     ├── middleware/
     │   ├── authMiddleware.js
     │   └── multerMiddleware.js
     ├── models/
-    │   ├── blog.js
+    │   ├── blog.js                 # includes chunkTexts + chunkEmbeddings cache
     │   └── user.js
     ├── routes/
     │   ├── adminRoutes.js
-    │   └── blogRoutes.js
+    │   ├── blogRoutes.js
+    │   └── chatRoutes.js           # chat API route
     ├── index.js
     └── package.json
 ```
@@ -133,8 +178,8 @@ niteshsingh-26-blogspace/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/blogspace.git
-cd blogspace
+git clone https://github.com/nikburner/BlogSpace.git
+cd BlogSpace
 ```
 
 ---
@@ -158,14 +203,16 @@ IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
 CLIENT_URL=http://localhost:5173
 ```
 
+> Note: No HuggingFace API key needed — embeddings run locally via Xenova!
+
 Start the server:
 ```bash
 npm run dev
-# or
-node index.js
 ```
 
 Server runs on **http://localhost:3000**
+
+> First start will download the Xenova embedding model (~25MB) once. After that it's instant forever!
 
 ---
 
@@ -211,17 +258,14 @@ Client runs on **http://localhost:5173**
 | DELETE | `/deleteBlog/:id` | Delete blog | ✅ |
 | POST | `/generateContent` | Generate AI content | ✅ |
 
+### Chat Routes (`/api/chat`)
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/` | RAG chatbot Q&A on blog | ❌ |
+
 ---
-
-
-
-
----
-
-
-
 
 ## 👤 Author
 
-**Nikhil** 
+**Nikhil**
 > Built with ❤️ and a lot of teal 🟢

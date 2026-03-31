@@ -140,29 +140,13 @@ export const deleteBlogById = async (req, res) => {
 export const generateContent = async (req, res) => {
   try {
     const { prompt } = req.body;
-    const userId = req.user.userId;
 
-    if (!prompt) {
-      return res.status(400).json({
-        success: false,
-        message: "Prompt is required",
-      });
-    }
+    const fullPrompt = `Write a detailed blog post about: "${prompt}"
+    - 600-800 words
+    - Include intro, 3-4 sections with headings, conclusion
+    - Use bullet points where needed
+    - Professional conversational tone`;
 
-    // Rate limiting check
-    const lastRequestTime = generateContentRateLimit.get(userId);
-    const now = Date.now();
-    if (lastRequestTime && now - lastRequestTime < RATE_LIMIT_WINDOW) {
-      return res.status(429).json({
-        success: false,
-        message: `Please wait ${Math.ceil((RATE_LIMIT_WINDOW - (now - lastRequestTime)) / 1000)} seconds before generating again`,
-      });
-    }
-
-    // Update rate limit
-    generateContentRateLimit.set(userId, now);
-
-    const fullPrompt = `${prompt} Generate a blog content for this topic in simple text format`;
     const content = await main(fullPrompt);
 
     if (!content) {
@@ -172,10 +156,8 @@ export const generateContent = async (req, res) => {
       });
     }
 
-    res.json({
-      success: true,
-      content,
-    });
+    res.json({ success: true, content });
+
   } catch (error) {
     console.error("Generate content error:", error);
     res.status(500).json({

@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import { useAppContext } from "../context/UseAppContext";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import ChatBot from '../components/ChatBot';
 
 const Blog = () => {
     const { id } = useParams();
@@ -86,6 +87,8 @@ const Blog = () => {
                     dangerouslySetInnerHTML={{ __html: data.description }}
                 />
             </div>
+
+            <ChatBot blogId={id} blogTitle={data.title} />
 
             <Footer />
         </div>

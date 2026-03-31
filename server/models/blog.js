@@ -11,10 +11,11 @@ const blogSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    chunkTexts: { type: [String], default: [] },
+    chunkEmbeddings: { type: [[Number]], default: [] },
   },
   { timestamps: true }
 );
 
 const Blog = mongoose.model("Blog", blogSchema);
-
 export default Blog;
