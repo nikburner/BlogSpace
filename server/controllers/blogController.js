@@ -60,9 +60,9 @@ export const login = async (req, res) => {
     // Set cookie options
     const cookieOptions = {
       httpOnly: true,
-      secure: false, // set to true in production
-      sameSite: "Lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure: true,
+      sameSite: "None",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     };
     // Set the cookie
     res.cookie("token", token, cookieOptions).json({
@@ -99,7 +99,7 @@ export const profile = async (req, res) => {
 
 export const logout = async (req, res) => {
   // Clear the token from the cookies
-  res.clearCookie("token").json({ message: "Logged out successfully" });
+  res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "None" }).json({ message: "Logged out successfully" });
 };
 
 export const getAllBlogs = async (req, res) => {
